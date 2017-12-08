@@ -1,0 +1,3 @@
+load("/Users/sonaliverma/Desktop/GitHub/sonali-verma/cancer.RData")
+load("/Users/sonaliverma/Desktop/GitHub/sonali-verma/Cancer Trials Lung.RData")
+load("/Users/sonaliverma/Desktop/Classes_Data/GitHub/sonali-verma/Cancer Trials Lung.RData")

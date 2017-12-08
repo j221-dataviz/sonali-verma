@@ -13,6 +13,9 @@ for (ch in chunks) {
   cancer_trials <- bind_rows(cancer_trials,tmp)
 }
 
+lung_trials <- read_csv("https://clinicaltrials.gov/ct2/results/download_fields?cond=lung+cancer&down_flds=all&down_fmt=csv&down_count=10000")
+
+
 # replace "null" in all columns with NA
 cancer_trials[cancer_trials == "null"] <- NA
 
@@ -32,6 +35,7 @@ prostate_cancer_trials <- cancer_trials %>%
   filter(grepl("Prostate", Conditions) & !grepl("Breast", Conditions) & !grepl("Lung", Conditions) & !grepl("Colorectal", Conditions) & !grepl("Myeloma", Conditions)) %>%
   mutate(type = "Prostate")
 
+#KEEP 
 lung_cancer_trials <- cancer_trials %>%
   filter(grepl("Lung", Conditions) & !grepl("Breast", Conditions) & !grepl("Prostate", Conditions) & !grepl("Colorectal", Conditions) & !grepl("Myeloma", Conditions)) %>%
   mutate(type = "Lung")
@@ -48,7 +52,7 @@ myeloma_cancer_trials <- cancer_trials %>%
 selected_cancer_trials <- bind_rows(breast_cancer_trials,prostate_cancer_trials,lung_cancer_trials,colorectal_cancer_trials,myeloma_cancer_trials)  
 
 # anti join to filter against other trials
-other_cancer_trials <- anti_join(cancer_trials,selected_cancer_trials) %>%
+other_cancer_trials <- anti_join(cancer_trials,selected_cancer_trials, by="NCT Number") %>%
   mutate(type = "Other")
 
 # recombine reclassified data
